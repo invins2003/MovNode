@@ -179,7 +179,6 @@ const run = async () => {
   ];
   const selectedUrl = options.find(o => o.name === selectedSourceLabel).value;
 
-  const isAndroid = process.platform === 'android';
   console.log(chalk.green.bold(`\n  SUCCESS! Opening player in ${isAndroid ? 'Brave / Default Browser' : 'Brave'}...`));
   console.log(chalk.gray(`  Link: ${selectedUrl}`));
   await openInBrave(selectedUrl);
