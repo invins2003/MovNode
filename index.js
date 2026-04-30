@@ -30,6 +30,16 @@ const showLogo = () => {
 
 const openInBrave = async (url) => {
   const bravePath = getBravePath();
+  if (bravePath === 'brave-android') {
+    // Force Brave on Android using Intent
+    try {
+      spawn('am', ['start', '-a', 'android.intent.action.VIEW', '-d', url, 'com.brave.browser'], { detached: true, stdio: 'ignore' }).unref();
+    } catch (err) {
+      spawn('termux-open', [url], { detached: true, stdio: 'ignore' }).unref();
+    }
+    return;
+  }
+
   if (bravePath) {
     // Using spawn to directly launch Brave is more reliable on Windows
     try {

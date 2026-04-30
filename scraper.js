@@ -114,6 +114,6 @@ export const getBravePath = () => {
     if (fs.existsSync(path)) return path;
   }
 
-  if (process.platform === 'android') return 'termux-open';
+  if (process.platform === 'android') return 'brave-android';
   return null;
 };
