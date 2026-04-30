@@ -2,18 +2,29 @@ import axios from 'axios';
 import fs from 'fs';
 
 const API_KEY = 'd131017ccc6e5462a81c9304d21476de';
-const API_BASE = 'https://api.themoviedb.org/3';
+const BASE_URLS = [
+  'https://api.tmdb.org/3',
+  'https://api.themoviedb.org/3',
+];
 
-const client = axios.create({
-  baseURL: API_BASE,
-  timeout: 10000,
-});
+const getClient = async (endpoint, params = {}) => {
+  for (const baseUrl of BASE_URLS) {
+    try {
+      const response = await axios.get(`${baseUrl}${endpoint}`, {
+        params: { ...params, api_key: API_KEY },
+        timeout: 5000,
+      });
+      return response.data;
+    } catch (e) {
+      // Silently try next fallback
+    }
+  }
+  throw new Error('All TMDB API endpoints failed. Check your internet connection.');
+};
 
 export const search = async (query) => {
   try {
-    const { data } = await client.get(`/search/multi`, {
-      params: { api_key: API_KEY, query }
-    });
+    const data = await getClient('/search/multi', { query });
     
     return (data.results || [])
       .filter(item => item.media_type === 'movie' || item.media_type === 'tv')
@@ -31,9 +42,7 @@ export const search = async (query) => {
 
 export const getTVDetails = async (id) => {
   try {
-    const { data } = await client.get(`/tv/${id}`, {
-      params: { api_key: API_KEY }
-    });
+    const data = await getClient(`/tv/${id}`);
     
     return (data.seasons || [])
       .filter(s => s.season_number > 0)
@@ -49,9 +58,7 @@ export const getTVDetails = async (id) => {
 
 export const getEpisodes = async (tvId, seasonNum) => {
   try {
-    const { data } = await client.get(`/tv/${tvId}/season/${seasonNum}`, {
-      params: { api_key: API_KEY }
-    });
+    const data = await getClient(`/tv/${tvId}/season/${seasonNum}`);
     
     return (data.episodes || []).map(ep => ({
       title: `Episode ${ep.episode_number}: ${ep.name}`,
