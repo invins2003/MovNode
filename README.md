@@ -67,7 +67,8 @@ movnode "Inception"
 ```
 
 ### Pro Tip for Mobile Users
-To get the best experience without ads, **install Brave Browser** on your Android device. MovNode is configured to automatically force links into Brave, which handles video player pop-ups perfectly.
+- **Ad-Free Experience**: To get the best experience without ads, **install Brave Browser** on your Android device. MovNode is configured to automatically force links into Brave, which handles video player pop-ups perfectly.
+- **Troubleshooting**: If search results are stuck or links don't load, your network provider might be blocking TMDB or the video sources. **Using a VPN** will usually resolve this immediately.
 
 ---
 
