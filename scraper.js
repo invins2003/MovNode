@@ -135,6 +135,8 @@ export const getVLCPath = () => {
   for (const path of commonPaths) {
     if (fs.existsSync(path)) return path;
   }
+  
+  if (process.platform === 'android') return 'termux-open';
   return null;
 };
 
@@ -148,5 +150,7 @@ export const getBravePath = () => {
   for (const path of commonPaths) {
     if (fs.existsSync(path)) return path;
   }
+
+  if (process.platform === 'android') return 'termux-open';
   return null;
 };
