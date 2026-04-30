@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import { search, getTVDetails, getEpisodes, getEmbedLink, getVLCPath, getBravePath } from './scraper.js';
-import { resolveStream } from './resolver.js';
 import { spawn } from 'child_process';
 import enquirer from 'enquirer';
 import chalk from 'chalk';
@@ -148,7 +147,8 @@ const run = async () => {
     spinner.text = 'Extracting direct video link (this may take 15-20s)...';
     spinner.start();
     try {
-      // Use vsembed as it's the one the user manually selected and it worked
+      // Dynamically import resolver only when needed to avoid Android crashes
+      const { resolveStream } = await import('./resolver.js');
       const directLink = await resolveStream(sources.vsembed);
       spinner.stop();
 
