@@ -129,11 +129,12 @@ const run = async () => {
   const sources = getEmbedLink(finalArgs.type, finalArgs.id, finalArgs.season, finalArgs.episode);
   spinner.stop();
 
+  const isAndroid = process.platform === 'android';
   const sourceSelector = new Select({
     name: 'source',
     message: 'Select Playback Source:',
     choices: [
-      { name: 'Direct Play (VLC / Ad-Free) 🚀', value: 'vlc' },
+      { name: `Direct Play (VLC / Ad-Free) ${isAndroid ? chalk.red('(Not Supported on Mobile)') : '🚀'}`, value: 'vlc', disabled: isAndroid },
       { name: 'VidSrc (Default)', value: sources.vidsrc },
       { name: 'VidSrc.xyz (Mirror)', value: sources.vidsrc_xyz },
       { name: 'VsEmbed (vsembed.su)', value: sources.vsembed },

@@ -1,5 +1,3 @@
-import { chromium } from 'playwright';
-
 /**
  * Resolves a direct .m3u8 stream link from a given embed URL.
  * @param {string} url - The embed URL to scrape.
@@ -7,6 +5,11 @@ import { chromium } from 'playwright';
  * @returns {Promise<string>} - The captured stream URL.
  */
 export const resolveStream = async (url, timeout = 45000) => {
+  if (process.platform === 'android') {
+    throw new Error('Direct Play is not supported on Android/Termux. Please use the Browser sources instead.');
+  }
+
+  const { chromium } = await import('playwright');
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
