@@ -57,3 +57,22 @@ yarn-error.log
 search_debug.html
 episodes_debug.html
 movie_debug.html
+
+# Flutter/Mobile App (Excluded from this repo)
+lib/
+android/
+ios/
+web/
+windows/
+linux/
+macos/
+pubspec.yaml
+pubspec.lock
+analysis_options.yaml
+.metadata
+*.iml
+*.dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
